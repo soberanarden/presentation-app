@@ -1,0 +1,65 @@
+<div class="grid">
+  <ng-container *ngFor="let item of data; let i = index">
+    <mat-card
+      [class]="'entry' + ' ' + item.type.toLowerCase().replace('_', '-')"
+      [style]="entryFullWidth ? 'width: 100%;' : ''"
+    >
+      <mat-form-field class="form-field">
+        <label> <b> Pytanie </b> </label>
+        <textarea
+          matInput
+          [(ngModel)]="item.question"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        >
+        </textarea>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <label> <b> Odpowiedz </b> </label>
+        <textarea
+          matInput
+          [(ngModel)]="item.answer"
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        >
+        </textarea>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <label> <b> Typ </b> </label>
+        <mat-select [(ngModel)]="item.type">
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <label> <b> Punkty cześciowe </b> </label>
+        <input matInput [(ngModel)]="item.partialPoints" type="number" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <label>
+          <b>
+            {{
+              item.type === QuestionType.FRENZY
+                ? "Czas (w sekundach)"
+                : "Punkty MAX"
+            }}
+          </b>
+        </label>
+        <input matInput [(ngModel)]="item.maxPoints" type="number" />
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <label><b>Hash</b></label>
+        <input matInput [(ngModel)]="item.hash" [disabled]="true" />
+      </mat-form-field>
+    </mat-card>
+  </ng-container>
+  <div class="entry"></div>
+</div>

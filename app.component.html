@@ -1,0 +1,61 @@
+<mat-card class="data">
+  <mat-card-actions class="header">
+    <mat-card-title> Family Feud - Ognisko Złomowisko v1.0 </mat-card-title>
+
+    <span class="spacer"></span>
+
+    <ng-container *ngIf="!gameMode">
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="hideContent = !hideContent"
+      >
+        {{ hideContent ? "Pokaż dane" : "Ukryj dane" }}
+        <mat-icon>
+          {{ hideContent ? "visibility" : "visibility_off" }}
+        </mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="onSaveChanges(); hideContent = false; gameMode = true"
+      >
+        Rozpocznij gre
+        <mat-icon> play_arrow </mat-icon>
+      </button>
+
+      <ng-container *ngIf="!hideContent">
+        <button mat-raised-button color="accent" (click)="onSaveChanges()">
+          Zapisz
+          <mat-icon> save </mat-icon>
+        </button>
+        <button mat-raised-button color="primary" (click)="onGeneratePPTX()">
+          PPTX
+          <mat-icon> file_download </mat-icon>
+        </button>
+        <button mat-raised-button color="primary" (click)="onGeneratePDF()">
+          PDF
+          <mat-icon> file_download </mat-icon>
+        </button>
+      </ng-container>
+    </ng-container>
+  </mat-card-actions>
+
+  <ng-container *ngIf="hideContent; else showGameData">
+    <mat-card-content>
+      <h2>
+        Dane ukryte - kliknij przycisk na gorze by sprawdzic dane lub rozpoczac
+        gre
+      </h2>
+    </mat-card-content>
+  </ng-container>
+  <ng-template #showGameData>
+    <app-data
+      *ngIf="!gameMode"
+      [data]="data"
+      (saveChanges)="onSaveChanges()"
+    ></app-data>
+  </ng-template>
+
+  <app-game *ngIf="gameMode" [data]="data"></app-game>
+</mat-card>
